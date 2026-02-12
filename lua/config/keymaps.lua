@@ -24,3 +24,4 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("n", "x", '"_x')
 -- Select all
 vim.keymap.set("n", "<C-a>", "gg<S-v>G")
+vim.keymap.set({ "n", "v" }, "<leader>0", '"0p', { desc = "Paste from Yank Register" })
