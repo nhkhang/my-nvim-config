@@ -1,4 +1,4 @@
-vim.g.mapleader = " "  -- Space as leader is standard
+vim.g.mapleader = " " -- Space as leader is standard
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
@@ -14,3 +14,10 @@ vim.opt.scrolloff = 8
 vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldcolumn = "1" -- Shows a small column on the left to indicate folds
+vim.opt.foldlevel = 99 -- Ensures files open with everything expanded
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+vim.opt.updatetime = 250

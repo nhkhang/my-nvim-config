@@ -9,7 +9,11 @@ return {
 				go = { "goimports", "gofmt" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
+				javascriptreact = { "prettier" }, -- JSX
+				typescriptreact = { "prettier" }, -- TSX
 				php = { "php_cs_fixer" },
+				json = { "prettier" },
+				jsonc = { "prettier" },
 			},
 			format_on_save = {
 				timeout_ms = 500,

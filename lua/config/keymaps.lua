@@ -1,19 +1,26 @@
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-    vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)
-    -- Navigate buffers (tabs)
-    vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Next Buffer" })
-    vim.keymap.set("n", "<S-h>", ":bprev<CR>", { desc = "Previous Buffer" })
-    -- Close the current buffer (close tab)
-    vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Close Buffer" })
-  end,
-})
+----- Buffer
+vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<S-h>", ":bprev<CR>", { desc = "Previous Buffer" })
+vim.keymap.set("n", "<leader>bd", function()
+	local bd = require("mini.bufremove").delete
+	if vim.bo.modified then
+		local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+		if choice == 1 then -- Yes
+			vim.cmd.write()
+			bd(0)
+		elseif choice == 2 then -- No
+			bd(0, true)
+		end
+	else
+		bd(0)
+	end
+end, { desc = "Delete Buffer" })
+
+----- Register
+-- Paste in visual mode without replacing the register
+vim.keymap.set("x", "<leader>p", [["_dP]])
+-- Delete to black hole register (doesn't override clipboard)
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set("n", "x", '"_x')
+-- Select all
+vim.keymap.set("n", "<C-a>", "gg<S-v>G")

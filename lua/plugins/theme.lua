@@ -1,21 +1,55 @@
 return {
+	-- 1. Persistence Plugin
+	{
+		"propet/colorscheme-persist.nvim",
+		lazy = false, -- Must load on startup to apply the saved theme
+		config = true,
+		opts = {
+			-- Optional: set a fallback if no theme is saved yet
+			fallback = "kanagawa-dragon",
+		},
+		keys = {
+			-- Press <leader>th to open the theme picker (requires Telescope)
+			{
+				"<leader>th",
+				function()
+					require("colorscheme-persist").picker()
+				end,
+				desc = "Browse Themes",
+			},
+		},
+	},
+
+	-- 2. Tokyonight Config
 	{
 		"folke/tokyonight.nvim",
-		priority = 1000, -- Important! Load this before all other plugins
+		lazy = true, -- Can be lazy now!
+		priority = 1000,
 		config = function()
 			require("tokyonight").setup({
-				style = "night", -- Options: "storm", "moon", "night", "day"
-				transparent = true, -- Change to true if you want your terminal background
-				terminal_colors = true,
+				style = "night",
+				transparent = true,
 				styles = {
 					comments = { italic = true },
 					keywords = { italic = true },
-					functions = {},
-					variables = {},
 				},
 			})
+		end,
+	},
 
-			vim.cmd.colorscheme("tokyonight")
+	-- 3. Kanagawa Config
+	{
+		"rebelot/kanagawa.nvim",
+		lazy = true, -- Can be lazy now!
+		priority = 1000,
+		config = function()
+			require("kanagawa").setup({
+				undercurl = true,
+				commentStyle = { italic = true },
+				keywordStyle = { italic = true, bold = false },
+				theme = "dragon",
+				background = { dark = "dragon", light = "lotus" },
+			})
 		end,
 	},
 }
