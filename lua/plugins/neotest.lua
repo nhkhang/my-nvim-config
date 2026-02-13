@@ -6,39 +6,43 @@ return {
 			"nvim-lua/plenary.nvim",
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			-- The Go Adapter
-			"nvim-neotest/neotest-go",
-			-- The Python Adapter (since you have python dap)
+			"fredrikaverpil/neotest-golang",
 			"nvim-neotest/neotest-python",
 		},
 		config = function()
-			-- 1. Setup Neotest
+			-- 3. Configure the new adapter
+			local neotest_golang = require("neotest-golang")
+
 			require("neotest").setup({
 				adapters = {
-					-- Go Adapter Config
-					require("neotest-go")({
-						experimental = {
-							test_table = true,
+					-- Go Adapter Config (FredrikAverpil version)
+					neotest_golang({
+						-- ERROR FIX: The option you asked for
+						testify_enabled = true,
+
+						-- Recommended settings for this adapter
+						go_test_args = {
+							"-v",
+							"-race",
+							"-count=1",
+							"-timeout=60s",
 						},
-						-- Useful: Force color output and disable cache
-						args = { "-count=1", "-timeout=60s" },
+						runner = "gotestsum", -- Recommended if you have 'gotestsum' installed
 					}),
 
-					-- Python Adapter Config
 					require("neotest-python")({
 						dap = { justMyCode = false },
 					}),
 				},
-				-- Optional: Configure the Output Panel
 				output = {
 					open_on_run = true,
 					enter = true,
+					short = false,
 				},
 			})
 		end,
-		-- 2. Keymaps (The important part!)
+		-- (Your keymaps remain the same)
 		keys = {
-			-- Run the test under the cursor
 			{
 				"<leader>tt",
 				function()
@@ -46,8 +50,6 @@ return {
 				end,
 				desc = "Run Nearest Test",
 			},
-
-			-- Run the entire current file
 			{
 				"<leader>tf",
 				function()
@@ -55,8 +57,6 @@ return {
 				end,
 				desc = "Run File",
 			},
-
-			-- Open the output panel (if it closed)
 			{
 				"<leader>to",
 				function()
@@ -64,14 +64,43 @@ return {
 				end,
 				desc = "Test Output",
 			},
-
-			-- DEBUG the test under the cursor (Uses nvim-dap-go)
 			{
 				"<leader>td",
 				function()
 					require("neotest").run.run({ strategy = "dap" })
 				end,
 				desc = "Debug Nearest Test",
+			},
+			{
+				"<leader>ts",
+				function()
+					require("neotest").summary.toggle()
+				end,
+				desc = "Toggle Test Summary",
+			},
+			{
+				"<leader>tT",
+				function()
+					require("trouble").toggle("quickfix")
+				end,
+				desc = "Test Failures (Trouble)",
+			},
+			-- Jump to the next failed test
+			{
+				"]t",
+				function()
+					require("neotest").jump.next({ status = "failed" })
+				end,
+				desc = "Next Failed Test",
+			},
+
+			-- Jump to the previous failed test
+			{
+				"[t",
+				function()
+					require("neotest").jump.prev({ status = "failed" })
+				end,
+				desc = "Prev Failed Test",
 			},
 		},
 	},
