@@ -1,40 +1,37 @@
 -- lua/plugins/ui.lua
 return {
-	-- File Explorer (Neo-tree)
+	-- File Explorer (oil.nvim)
 	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-		},
+		"stevearc/oil.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons", "benomahony/oil-git.nvim" },
 		config = function()
-			require("neo-tree").setup({
-				window = {
-					mappings = {
-						["<space>"] = "none",
-					},
+			require("oil-git").setup()
+			require("oil").setup({
+				win_options = {
+					signcolumn = "yes:2",
 				},
-				filesystem = {
-					filtered_items = {
-						visible = true,
-						hide_dotfiles = false,
-						hide_gitignored = false,
-					},
-					follow_current_file = { enabled = true },
-					use_libuv_file_watcher = true,
-					window = {
-						mappings = {
-							["<Space>"] = "none",
-							["l"] = "open",
-							["<CR>"] = "open",
-						},
-					},
+				default_file_explorer = true,
+				view_options = {
+					show_hidden = true,
+				},
+				float = {
+					padding = 2,
+					max_width = 120,
+					max_height = 30,
+				},
+				keymaps = {
+					["q"] = "actions.close",
+					["<Esc>"] = "actions.close",
 				},
 			})
 
-			vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", {})
+			vim.keymap.set("n", "<leader>e", function()
+				require("oil").open_float()
+			end, { desc = "Open file explorer" })
+
+			vim.keymap.set("n", "-", function()
+				require("oil").open()
+			end, { desc = "Open parent directory" })
 		end,
 	},
 
@@ -48,14 +45,6 @@ return {
 				mode = "buffers",
 				separator_style = "slant",
 				diagnostics = "nvim_lsp",
-				offsets = {
-					{
-						filetype = "neo-tree",
-						text = "File Explorer",
-						highlight = "Directory",
-						separator = true,
-					},
-				},
 			},
 		},
 	},
@@ -64,7 +53,7 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("lualine").setup({
-				options = { theme = "kanagawa" }, -- You can change to 'tokyonight' or 'catppuccin' later
+				options = { theme = "auto" },
 			})
 		end,
 	},

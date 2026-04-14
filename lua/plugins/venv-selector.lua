@@ -6,7 +6,7 @@ return {
 		"mfussenegger/nvim-dap-python",
 	},
 	branch = "main", -- Use this branch for the latest version
-	lazy = false, -- Load immediately so it can pick up the venv on startup
+	ft = "python", -- Only load when editing Python files
 	config = function()
 		require("venv-selector").setup({
 			-- SETTINGS

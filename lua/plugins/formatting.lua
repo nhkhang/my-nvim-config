@@ -12,13 +12,16 @@ return {
 				javascriptreact = { "prettier" }, -- JSX
 				typescriptreact = { "prettier" }, -- TSX
 				php = { "php_cs_fixer" },
-				json = { "prettier" },
-				jsonc = { "prettier" },
+				json = { "prettierd", "prettier" },
+				jsonc = { "prettierd", "prettier" },
 			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
+			format_on_save = function(bufnr)
+				local ignore_filetypes = { "json" }
+				if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+					return { timeout_ms = 3000, lsp_fallback = false }
+				end
+				return { timeout_ms = 1000, lsp_fallback = true }
+			end,
 		})
 	end,
 }

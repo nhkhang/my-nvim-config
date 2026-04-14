@@ -2,11 +2,17 @@ return {
 	"nvim-telescope/telescope.nvim",
 	tag = "0.1.6",
 	dependencies = { "nvim-lua/plenary.nvim" },
+	cmd = "Telescope",
+	keys = {
+		{ "<leader><leader>", function() require("telescope.builtin").find_files() end, desc = "Search Files" },
+		{ "<leader>pf", function() require("telescope.builtin").find_files() end, desc = "Find Files" },
+		{ "<C-p>", function() require("telescope.builtin").git_files() end, desc = "Git Files" },
+		{ "<leader>pg", function() require("telescope.builtin").live_grep() end, desc = "Live Grep" },
+		{ "<leader>pws", function() require("telescope.builtin").grep_string() end, desc = "Grep String" },
+		{ "<leader>pr", function() require("telescope.builtin").resume() end, desc = "Resume Search" },
+	},
 	config = function()
-		local telescope = require("telescope")
-		local builtin = require("telescope.builtin")
-
-		telescope.setup({
+		require("telescope").setup({
 			defaults = {
 				path_display = { "filename_first" },
 				wrap_results = false,
@@ -17,8 +23,8 @@ return {
 					width = 0.95,
 					height = 0.95,
 					horizontal = {
-						preview_width = 0.6, -- 60% for preview
-						prompt_position = "top", -- Search bar at the top (VS Code style)
+						preview_width = 0.6,
+						prompt_position = "top",
 					},
 				},
 
@@ -27,13 +33,5 @@ return {
 				},
 			},
 		})
-
-		-- Keymaps
-		vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Search Files" })
-		vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
-		vim.keymap.set("n", "<C-p>", builtin.git_files, {})
-		vim.keymap.set("n", "<leader>pg", builtin.live_grep, {})
-		vim.keymap.set("n", "<leader>pws", builtin.grep_string, {})
-		vim.keymap.set("n", "<leader>pr", builtin.resume, {})
 	end,
 }

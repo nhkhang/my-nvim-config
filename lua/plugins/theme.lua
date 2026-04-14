@@ -6,7 +6,7 @@ return {
 		config = true,
 		opts = {
 			-- Optional: set a fallback if no theme is saved yet
-			fallback = "kanagawa-dragon",
+			fallback = "oxocarbon",
 		},
 		keys = {
 			-- Press <leader>th to open the theme picker (requires Telescope)
@@ -51,5 +51,12 @@ return {
 				background = { dark = "dragon", light = "lotus" },
 			})
 		end,
+	},
+
+	-- 4. Oxocarbon (nyoom) Config
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = true,
+		priority = 1000,
 	},
 }

@@ -53,7 +53,6 @@ return {
 					col = 1,
 				},
 				on_attach = function(bufnr)
-					print("Gitsigns is attaching to buffer " .. bufnr)
 					local gs = package.loaded.gitsigns
 
 					local function map(mode, l, r, opts)
@@ -79,7 +78,30 @@ return {
 			})
 		end,
 	},
-	-- 2. Lazygit (Full Git GUI)
+	-- 2. Diffview (PR review & diff viewer)
+	{
+		"sindrets/diffview.nvim",
+		cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose" },
+		keys = {
+			{ "<leader>do", "<cmd>DiffviewOpen<cr>", desc = "Diff against Index" },
+			{ "<leader>dm", "<cmd>DiffviewOpen origin/main...HEAD<cr>", desc = "Diff against Main" },
+			{ "<leader>dh", "<cmd>DiffviewFileHistory %<cr>", desc = "File History (current)" },
+			{ "<leader>dH", "<cmd>DiffviewFileHistory<cr>", desc = "File History (all)" },
+			{ "<leader>dc", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
+		},
+		opts = {
+			enhanced_diff_hl = true,
+			view = {
+				default = { layout = "diff2_horizontal" },
+				merge_tool = { layout = "diff3_mixed" },
+			},
+			file_panel = {
+				listing_style = "tree",
+				win_config = { width = 35 },
+			},
+		},
+	},
+	-- 3. Lazygit (Full Git GUI)
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {

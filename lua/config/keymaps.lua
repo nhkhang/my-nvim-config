@@ -1,18 +1,22 @@
+----- Save
+vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
+
 ----- Buffer
-vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Next Buffer" })
-vim.keymap.set("n", "<S-h>", ":bprev<CR>", { desc = "Previous Buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<S-h>", "<cmd>bprev<CR>", { desc = "Previous Buffer" })
 vim.keymap.set("n", "<leader>bd", function()
 	local bd = require("mini.bufremove").delete
+	local win_count = #vim.api.nvim_list_wins()
 	if vim.bo.modified then
 		local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
 		if choice == 1 then -- Yes
 			vim.cmd.write()
-			bd(0)
+			if win_count > 1 then vim.cmd("close") else bd(0) end
 		elseif choice == 2 then -- No
-			bd(0, true)
+			if win_count > 1 then vim.cmd("close") else bd(0, true) end
 		end
 	else
-		bd(0)
+		if win_count > 1 then vim.cmd("close") else bd(0) end
 	end
 end, { desc = "Delete Buffer" })
 

@@ -18,12 +18,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		opts = {
-			-- Example: Disable the "Conceal" feature if you prefer seeing the raw symbols (**bold**)
-			-- conceal = {
-			--   enabled = false,
-			-- },
-		},
+		opts = {},
 		ft = { "markdown" },
 	},
 }

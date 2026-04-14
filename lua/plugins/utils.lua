@@ -4,20 +4,13 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
+		keys = { { "<C-t>", desc = "Toggle Terminal" } },
 		config = function()
 			require("toggleterm").setup({
 				open_mapping = [[<C-t>]],
 				direction = "float",
 				float_opts = { border = "curved" },
 			})
-		end,
-	},
-
-	-- Git Signs (Green/Red bars in the gutter)
-	{
-		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
 		end,
 	},
 
@@ -42,18 +35,21 @@ return {
 	-- Comments (gc to comment lines)
 	{
 		"numToStr/Comment.nvim",
+		event = "BufReadPost",
 		config = true,
 	},
 	{
 		"echasnovski/mini.bufremove",
 		version = "*",
+		event = "BufReadPost",
 	},
 
 	{
 		"saghen/blink.cmp",
 		version = "*",
+		event = "InsertEnter",
 		opts = {
-			keymap = { preset = "super-tab" }, -- This one line replaces all the logic above
+			keymap = { preset = "super-tab" },
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},

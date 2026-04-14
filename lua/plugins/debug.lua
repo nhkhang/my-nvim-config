@@ -4,10 +4,18 @@ return {
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
-			"nvim-neotest/nvim-nio", -- Required for dap-ui
-			"leoluz/nvim-dap-go", -- Go debugger
-			"mfussenegger/nvim-dap-python", -- Python debugger
+			"nvim-neotest/nvim-nio",
+			"leoluz/nvim-dap-go",
+			"mfussenegger/nvim-dap-python",
 		},
+		keys = {
+			{ "<F5>", function() require("dap").continue() end, desc = "Debug: Start/Continue" },
+			{ "<F1>", function() require("dap").step_into() end, desc = "Debug: Step Into" },
+			{ "<F2>", function() require("dap").step_over() end, desc = "Debug: Step Over" },
+			{ "<F3>", function() require("dap").step_out() end, desc = "Debug: Step Out" },
+			{ "<leader>b", function() require("dap").toggle_breakpoint() end, desc = "Debug: Toggle Breakpoint" },
+		},
+		cmd = { "DapContinue", "DapToggleBreakpoint" },
 		config = function()
 			local dap = require("dap")
 			local dapui = require("dapui")
@@ -33,12 +41,6 @@ return {
 				dapui.close()
 			end
 
-			-- Keymaps
-			vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
-			vim.keymap.set("n", "<F1>", dap.step_into, { desc = "Debug: Step Into" })
-			vim.keymap.set("n", "<F2>", dap.step_over, { desc = "Debug: Step Over" })
-			vim.keymap.set("n", "<F3>", dap.step_out, { desc = "Debug: Step Out" })
-			vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
 		end,
 	},
 }

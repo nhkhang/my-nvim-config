@@ -12,6 +12,8 @@ vim.opt.backup = false
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.clipboard = "unnamedplus"
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
 vim.opt.foldmethod = "expr"
@@ -21,3 +23,9 @@ vim.opt.foldlevel = 99 -- Ensures files open with everything expanded
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 vim.opt.updatetime = 250
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "json",
+  callback = function()
+    vim.opt_local.foldmethod = "syntax"
+  end,
+})
