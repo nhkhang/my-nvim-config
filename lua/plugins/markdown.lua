@@ -18,7 +18,14 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		opts = {},
 		ft = { "markdown" },
+		opts = {
+			anti_conceal = { enabled = false },
+			render_modes = { "n", "c", "t" },
+		},
+		keys = {
+			{ "<leader>mr", "<cmd>RenderMarkdown toggle<cr>", desc = "Toggle Markdown Render" },
+			{ "<leader>mb", "<cmd>RenderMarkdown buf_toggle<cr>", desc = "Toggle Markdown Render (buffer)" },
+		},
 	},
 }

@@ -22,7 +22,15 @@ return {
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
-		opts = {},
+		opts = {
+			spec = {
+				{ "<leader>d", group = "Diffview" },
+				{ "<leader>h", group = "Git Hunks" },
+				{ "<leader>l", group = "LazyGit" },
+				{ "<leader>p", group = "Search/Grep" },
+				{ "<leader>t", group = "Toggle" },
+			},
+		},
 	},
 
 	-- Auto Pairs (Simply closes brackets/quotes)
@@ -47,7 +55,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*",
-		event = "InsertEnter",
+		lazy = false,
 		opts = {
 			keymap = { preset = "super-tab" },
 			sources = {

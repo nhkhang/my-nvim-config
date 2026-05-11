@@ -1,5 +1,9 @@
 return {
 	"stevearc/conform.nvim",
+	dependencies = {
+		"williamboman/mason.nvim",
+		"zapling/mason-conform.nvim",
+	},
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		require("conform").setup({
@@ -23,5 +27,6 @@ return {
 				return { timeout_ms = 1000, lsp_fallback = true }
 			end,
 		})
+		require("mason-conform").setup()
 	end,
 }

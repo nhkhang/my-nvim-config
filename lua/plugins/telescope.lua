@@ -6,7 +6,6 @@ return {
 	keys = {
 		{ "<leader><leader>", function() require("telescope.builtin").find_files() end, desc = "Search Files" },
 		{ "<leader>pf", function() require("telescope.builtin").find_files() end, desc = "Find Files" },
-		{ "<C-p>", function() require("telescope.builtin").git_files() end, desc = "Git Files" },
 		{ "<leader>pg", function() require("telescope.builtin").live_grep() end, desc = "Live Grep" },
 		{ "<leader>pws", function() require("telescope.builtin").grep_string() end, desc = "Grep String" },
 		{ "<leader>pr", function() require("telescope.builtin").resume() end, desc = "Resume Search" },

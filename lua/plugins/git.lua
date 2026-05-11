@@ -1,3 +1,24 @@
+-- Cache base branch per repo (keyed by git root)
+-- Persists for the Neovim session; no repeated network calls
+local base_branch_cache = {}
+local function get_base_branch()
+	local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+	if base_branch_cache[root] then
+		return base_branch_cache[root]
+	end
+	local result = vim.fn.systemlist("git remote show origin")
+	local base = "main"
+	for _, line in ipairs(result) do
+		local match = line:match("HEAD branch:%s*(.+)")
+		if match then
+			base = match
+			break
+		end
+	end
+	base_branch_cache[root] = base
+	return base
+end
+
 return {
 	-- 1. Gitsigns (The side bars)
 	{
@@ -84,13 +105,20 @@ return {
 		cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose" },
 		keys = {
 			{ "<leader>do", "<cmd>DiffviewOpen<cr>", desc = "Diff against Index" },
-			{ "<leader>dm", "<cmd>DiffviewOpen origin/main...HEAD<cr>", desc = "Diff against Main" },
+			{
+				"<leader>dm",
+				function()
+					vim.cmd("DiffviewOpen origin/" .. get_base_branch() .. "...HEAD")
+				end,
+				desc = "Diff against Base Branch",
+			},
 			{ "<leader>dh", "<cmd>DiffviewFileHistory %<cr>", desc = "File History (current)" },
 			{ "<leader>dH", "<cmd>DiffviewFileHistory<cr>", desc = "File History (all)" },
 			{ "<leader>dc", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
 		},
 		opts = {
 			enhanced_diff_hl = true,
+			diff_binaries = false,
 			view = {
 				default = { layout = "diff2_horizontal" },
 				merge_tool = { layout = "diff3_mixed" },
@@ -100,6 +128,20 @@ return {
 				win_config = { width = 35 },
 			},
 		},
+		config = function(_, opts)
+			vim.opt.diffopt:append("context:99999")
+			-- Jump to first change when entering a diff buffer
+			vim.api.nvim_create_autocmd("BufWinEnter", {
+				callback = function()
+					if vim.wo.diff then
+						vim.defer_fn(function()
+							pcall(vim.cmd, "normal! gg]c")
+						end, 100)
+					end
+				end,
+			})
+			require("diffview").setup(opts)
+		end,
 	},
 	-- 3. Lazygit (Full Git GUI)
 	{

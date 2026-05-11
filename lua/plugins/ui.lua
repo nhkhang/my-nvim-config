@@ -3,9 +3,8 @@ return {
 	-- File Explorer (oil.nvim)
 	{
 		"stevearc/oil.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons", "benomahony/oil-git.nvim" },
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			require("oil-git").setup()
 			require("oil").setup({
 				win_options = {
 					signcolumn = "yes:2",
@@ -54,6 +53,9 @@ return {
 		config = function()
 			require("lualine").setup({
 				options = { theme = "auto" },
+				sections = {
+					lualine_c = { { "filename", path = 1 } },
+				},
 			})
 		end,
 	},
