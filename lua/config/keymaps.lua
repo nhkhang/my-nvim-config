@@ -1,6 +1,13 @@
 ----- Save
 vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
 
+----- Markdown preview via glow (terminal)
+vim.keymap.set("n", "<leader>mg", function()
+	local file = vim.fn.expand("%:p")
+	if file == "" then return vim.notify("No file", vim.log.levels.WARN) end
+	vim.cmd("tabnew | term glow -s dark " .. vim.fn.shellescape(file))
+end, { desc = "Glow Markdown Preview" })
+
 ----- Buffer
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<S-h>", "<cmd>bprev<CR>", { desc = "Previous Buffer" })

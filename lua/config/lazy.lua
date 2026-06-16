@@ -16,6 +16,7 @@ require("lazy").setup({
   spec = {
     { import = "plugins" }, -- Import everything inside lua/plugins/
   },
-  checker = { enabled = true }, -- Checks for updates
+  checker = { enabled = true, notify = false },
+  change_detection = { notify = false },
 })
 

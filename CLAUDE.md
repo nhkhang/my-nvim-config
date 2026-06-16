@@ -21,7 +21,7 @@ lua/
     formatting.lua          # conform.nvim (format on save: Lua, Python, Go, JS/TS, PHP, JSON)
     git.lua                 # gitsigns, diffview, lazygit
     lsp.lua                 # lspconfig, mason, blink.cmp (Go, Python, Lua, TS, PHP)
-    markdown.lua            # markdown-preview, render-markdown
+    markdown.lua            # markdown-preview (browser), render-markdown
     neotest.lua             # neotest with Go and Python adapters
     noice.lua               # noice.nvim, nui, nvim-notify (UI for messages/commands)
     session.lua             # persistence.nvim (session save/restore)
