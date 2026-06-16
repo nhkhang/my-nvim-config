@@ -40,12 +40,6 @@ return {
 		config = true,
 	},
 
-	-- Comments (gc to comment lines)
-	{
-		"numToStr/Comment.nvim",
-		event = "BufReadPost",
-		config = true,
-	},
 	{
 		"echasnovski/mini.bufremove",
 		version = "*",

@@ -29,7 +29,7 @@ lua/
     theme.lua               # colorscheme-persist, tokyonight, kanagawa, oxocarbon
     treesitter.lua          # nvim-treesitter (syntax highlighting, 27+ languages)
     ui.lua                  # oil.nvim (file explorer), bufferline, lualine, devicons
-    utils.lua               # toggleterm, which-key, autopairs, Comment, mini.bufremove
+    utils.lua               # toggleterm, which-key, autopairs, mini.bufremove (commenting uses built-in gc/gcc)
     venv-selector.lua       # venv-selector.nvim (Python virtualenv picker)
 ```
 

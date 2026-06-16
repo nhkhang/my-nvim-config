@@ -27,6 +27,11 @@ vim.keymap.set("n", "<leader>bd", function()
 	end
 end, { desc = "Delete Buffer" })
 
+----- Comments (built-in gc/gcc; <leader>/ for quick toggle)
+-- Space + / toggles the current line (normal) or the visual selection
+vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
+vim.keymap.set("x", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })
+
 ----- Register
 -- Paste in visual mode without replacing the register
 vim.keymap.set("x", "<leader>p", [["_dP]])
