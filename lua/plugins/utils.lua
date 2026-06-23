@@ -25,6 +25,7 @@ return {
 		opts = {
 			spec = {
 				{ "<leader>d", group = "Diffview" },
+				{ "<leader>g", group = "Git (Hunk review)" },
 				{ "<leader>h", group = "Git Hunks" },
 				{ "<leader>l", group = "LazyGit" },
 				{ "<leader>p", group = "Search/Grep" },

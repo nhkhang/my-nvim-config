@@ -19,6 +19,40 @@ local function get_base_branch()
 	return base
 end
 
+-- Hunk: review-first diff TUI (https://github.com/modem-dev/hunk).
+-- No Neovim plugin exists, so we float the `hunk` CLI in a toggleterm window
+-- (the same pattern lazygit.nvim uses). Requires `hunkdiff` on $PATH:
+--   npm i -g hunkdiff   (or: brew install hunk / nix)
+local hunk_terms = {}
+local function hunk(cmd)
+	return function()
+		if vim.fn.executable("hunk") == 0 then
+			return vim.notify("hunk not found — run `npm i -g hunkdiff`", vim.log.levels.ERROR)
+		end
+		-- Memoize one terminal per command so toggling reuses the same window
+		if not hunk_terms[cmd] then
+			hunk_terms[cmd] = require("toggleterm.terminal").Terminal:new({
+				cmd = cmd,
+				direction = "float",
+				float_opts = {
+					border = "curved",
+					-- hunk only shows its sidebar when the window is >= 220 columns
+					-- wide (src/ui/lib/responsive.ts), so use nearly the full editor width.
+					width = function()
+						return math.max(math.floor(vim.o.columns * 0.98), vim.o.columns - 2)
+					end,
+					height = function()
+						return math.floor(vim.o.lines * 0.9)
+					end,
+				},
+				close_on_exit = true,
+				hidden = true,
+			})
+		end
+		hunk_terms[cmd]:toggle()
+	end
+end
+
 return {
 	-- 1. Gitsigns (The side bars)
 	{
@@ -160,6 +194,21 @@ return {
 		},
 		keys = {
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+		},
+	},
+	-- 4. Hunk (review-first diff TUI) — wrapped via toggleterm (no nvim plugin exists)
+	{
+		"akinsho/toggleterm.nvim", -- merged with the spec in utils.lua
+		keys = {
+			{ "<leader>gh", hunk("hunk diff"), desc = "Hunk: review working tree" },
+			{ "<leader>gH", hunk("hunk show"), desc = "Hunk: review last commit" },
+			{
+				"<leader>gm",
+				function()
+					hunk("git diff --no-color origin/" .. get_base_branch() .. "...HEAD | hunk patch -")()
+				end,
+				desc = "Hunk: review vs base branch",
+			},
 		},
 	},
 }

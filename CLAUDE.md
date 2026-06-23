@@ -19,7 +19,7 @@ lua/
     debug.lua               # nvim-dap, dap-ui, dap-go, dap-python
     error.lua               # trouble.nvim (diagnostics viewer)
     formatting.lua          # conform.nvim (format on save: Lua, Python, Go, JS/TS, PHP, JSON)
-    git.lua                 # gitsigns, diffview, lazygit
+    git.lua                 # gitsigns, diffview, lazygit, hunk (CLI wrapper via toggleterm)
     lsp.lua                 # lspconfig, mason, blink.cmp (Go, Python, Lua, TS, PHP)
     markdown.lua            # markdown-preview (browser), render-markdown
     neotest.lua             # neotest with Go and Python adapters
