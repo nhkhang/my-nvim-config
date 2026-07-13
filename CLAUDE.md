@@ -16,10 +16,12 @@ lua/
     keymaps.lua             # Custom keybinds (save, buffer nav, register ops)
     lazy.lua                # Lazy.nvim plugin manager init
   plugins/
+    d2.lua                  # d2 diagrams: d2-vim (syntax/fmt/ASCII), diagram.nvim (inline render via image.nvim)
     debug.lua               # nvim-dap, dap-ui, dap-go, dap-python
     error.lua               # trouble.nvim (diagnostics viewer)
     formatting.lua          # conform.nvim (format on save: Lua, Python, Go, JS/TS, PHP, JSON)
     git.lua                 # gitsigns, diffview, lazygit, hunk (CLI wrapper via toggleterm)
+    image.lua               # image.nvim (inline image engine; views png/jpg/gif/etc. directly; kitty protocol)
     lsp.lua                 # lspconfig, mason, blink.cmp (Go, Python, Lua, TS, PHP)
     markdown.lua            # markdown-preview (browser), render-markdown
     neotest.lua             # neotest with Go and Python adapters
