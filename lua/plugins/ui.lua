@@ -55,6 +55,20 @@ return {
 				options = { theme = "auto" },
 				sections = {
 					lualine_c = { { "filename", path = 1 } },
+					-- page indicator for pdfreader.nvim (set in plugins/pdf.lua)
+					lualine_x = {
+						{
+							function()
+								return vim.b.pdfreader_status
+							end,
+							cond = function()
+								return vim.b.pdfreader_status ~= nil
+							end,
+						},
+						"encoding",
+						"fileformat",
+						"filetype",
+					},
 				},
 			})
 		end,

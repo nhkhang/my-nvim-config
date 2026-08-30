@@ -148,6 +148,8 @@ return {
 			},
 			{ "<leader>dh", "<cmd>DiffviewFileHistory %<cr>", desc = "File History (current)" },
 			{ "<leader>dH", "<cmd>DiffviewFileHistory<cr>", desc = "File History (all)" },
+			{ "<leader>dl", ":.,.DiffviewFileHistory<cr>", mode = "n", desc = "Line History (current line)" },
+			{ "<leader>dl", ":'<,'>DiffviewFileHistory<cr>", mode = "v", desc = "Line History (selection)" },
 			{ "<leader>dc", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
 		},
 		opts = {

@@ -1,12 +1,22 @@
 ----- Save
 vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<cr>", { desc = "Save without formatting" })
 
+----- Search
+-- <Esc> covers the nohlsearch half of the built-in <C-l>, which is now window nav
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+
 ----- Markdown preview via glow (terminal)
 vim.keymap.set("n", "<leader>mg", function()
 	local file = vim.fn.expand("%:p")
 	if file == "" then return vim.notify("No file", vim.log.levels.WARN) end
 	vim.cmd("tabnew | term glow -s dark " .. vim.fn.shellescape(file))
 end, { desc = "Glow Markdown Preview" })
+
+----- Window
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Window left" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Window down" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Window up" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Window right" })
 
 ----- Buffer
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next Buffer" })

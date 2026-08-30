@@ -9,4 +9,6 @@ end
 
 require("config.options")
 require("config.keymaps")
+-- Eager: a lazy hook can't intercept `nvim data.parquet` on the very first buffer
+require("config.parquet")
 require("config.lazy")

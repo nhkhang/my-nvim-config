@@ -24,6 +24,7 @@ return {
 		end,
 		opts = {
 			spec = {
+				{ "<leader>D", group = "Database" },
 				{ "<leader>d", group = "Diffview" },
 				{ "<leader>g", group = "Git (Hunk review)" },
 				{ "<leader>h", group = "Git Hunks" },
@@ -55,6 +56,15 @@ return {
 			keymap = { preset = "super-tab" },
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
+				-- SQL buffers (dadbod-ui) also get schema/table/column completion
+				per_filetype = {
+					sql = { "dadbod", "snippets", "buffer" },
+					mysql = { "dadbod", "snippets", "buffer" },
+					plsql = { "dadbod", "snippets", "buffer" },
+				},
+				providers = {
+					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				},
 			},
 		},
 	},
