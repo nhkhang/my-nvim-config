@@ -33,7 +33,7 @@ lua/
     session.lua             # persistence.nvim (session save/restore)
     telescope.lua           # telescope.nvim (fuzzy finder)
     theme.lua               # colorscheme-persist, tokyonight, kanagawa, oxocarbon
-    treesitter.lua          # nvim-treesitter (syntax highlighting, 27+ languages)
+    treesitter.lua          # nvim-treesitter `main` branch (needs Nvim 0.12+, tree-sitter CLI 0.25+): FileType autocmd starts highlight/indent, auto-installs missing parsers
     ui.lua                  # oil.nvim (file explorer), bufferline, lualine, devicons
     utils.lua               # toggleterm, which-key, autopairs, mini.bufremove (commenting uses built-in gc/gcc)
     venv-selector.lua       # venv-selector.nvim (Python virtualenv picker)
